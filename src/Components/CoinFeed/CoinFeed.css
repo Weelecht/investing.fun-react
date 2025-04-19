@@ -9,4 +9,25 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     max-width: 1800px;
     justify-content: center;
+    max-height: calc(4 * (166px + 30px) + 48px); /* 4 rows + padding */
+    overflow-y: auto;
+}
+
+/* Styling the scrollbar */
+.CoinFeed-Container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.CoinFeed-Container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.CoinFeed-Container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.CoinFeed-Container::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
 }

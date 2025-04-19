@@ -68,7 +68,9 @@ export default function Card({ cardInfo, onDragStart, onAmountUpdate }: Props) {
 
       <h4 className='Title'>{cardInfo.name}</h4>
       <div className='Stats-Container'>
-        <span className='Stat-Line'>Sharpe: {cardInfo.sharpe}</span>
+        <span className='Stat-Line'>
+          Sharpe: <span style={{ color: cardInfo.sharpe > 0 ? '#4caf50' : '#f44336', fontWeight: 'bold' }}>{cardInfo.sharpe}</span>
+        </span>
         <span className='Stat-Line'>Amount: {savedAmount}</span>
         <span className='Stat-Line'>Price: {formatCurrency(cardInfo.lastPrice)}</span>
         <span className='Stat-Line'>
