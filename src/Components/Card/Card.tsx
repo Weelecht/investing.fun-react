@@ -18,6 +18,15 @@ type Props = {
   onAmountUpdate?: (name: string, amount: number) => void;
 };
 
+const formatCurrency = (value: number): string => {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(value);
+};
+
 export default function Card({ cardInfo, onDragStart, onAmountUpdate }: Props) {
   const [amount, setAmount] = useState('');
   const [savedAmount, setSavedAmount] = useState(cardInfo.amount || 0);
@@ -60,8 +69,8 @@ export default function Card({ cardInfo, onDragStart, onAmountUpdate }: Props) {
       <h4 className='Title'>{cardInfo.name}</h4>
       <p className='Sharpe-Days-Price-Amount'>{`Sharpe: ${cardInfo.sharpe} \n 
         Amount: ${savedAmount} \n 
-        Price: ${cardInfo.lastPrice} \n 
-        Position: $${position.toFixed(2)}`}</p>
+        Price: ${formatCurrency(cardInfo.lastPrice)} \n 
+        Position: ${formatCurrency(position)}`}</p>
       <form onSubmit={handleSubmission} className="input-container">
         <input 
           type="number" 
