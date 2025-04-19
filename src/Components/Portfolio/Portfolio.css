@@ -24,7 +24,7 @@
 
 .Portfolio-Container {
     display: grid;
-    grid-template-columns: repeat(5, 133px);
+    grid-template-columns: repeat(5, 166px);
     gap: 20px;
     padding: 16px;
     background: white;

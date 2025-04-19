@@ -26,9 +26,14 @@ export default function Portfolio({portfolio: initialPortfolio, onDropCard, onDr
         setPortfolio(initialPortfolio);
     }, [initialPortfolio]);
 
-    const allowDrop = (e: React.DragEvent) => e.preventDefault();
+    const allowDrop = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
 
     const handleDrop = (e:React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
         const data = e.dataTransfer.getData("card");
         const card: CardInfo = JSON.parse(data);
         // Ensure position is calculated if not provided
@@ -41,7 +46,7 @@ export default function Portfolio({portfolio: initialPortfolio, onDropCard, onDr
     const calculatePositions = (portfolio: CardInfo[]) => {
         return portfolio.map(coin => ({
             ...coin,
-            position: (coin.amount || 0) * coin.lastPrice
+            position: coin.position || (coin.amount || 0) * coin.lastPrice
         }));
     };
 
@@ -51,7 +56,7 @@ export default function Portfolio({portfolio: initialPortfolio, onDropCard, onDr
     const handleAmountUpdate = (name: string, amount: number) => {
         // Update the local portfolio state
         const updatedPortfolio = portfolio.map(coin => 
-            coin.name === name ? { ...coin, amount } : coin
+            coin.name === name ? { ...coin, amount, position: amount * coin.lastPrice } : coin
         );
         setPortfolio(updatedPortfolio);
         
@@ -62,7 +67,11 @@ export default function Portfolio({portfolio: initialPortfolio, onDropCard, onDr
     };
 
     return (
-        <div onDragOver={allowDrop} onDrop={handleDrop} className='Portfolio-Wrapper'>
+        <div 
+            onDragOver={allowDrop} 
+            onDrop={handleDrop}
+            className='Portfolio-Wrapper'
+        >
             <StatusBar portfolio={portfolio} totalValue={totalPortfolioValue} />
             <div className='Portfolio-Container'>
                 {portfolioWithPositions.map((card)=> {

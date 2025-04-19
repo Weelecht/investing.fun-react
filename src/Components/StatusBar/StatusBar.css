@@ -13,4 +13,56 @@
     margin: 0;
     color: #e0e0e0;
     font-size: 1.1rem;
+}
+
+.Loading-Dots {
+    display: inline-block;
+    color: #e0e0e0;
+    height: 1.2em;
+    position: relative;
+}
+
+.Loading-Dots span {
+    display: inline-block;
+    position: absolute;
+    animation: sineWave 1.5s infinite;
+    opacity: 0;
+}
+
+.Loading-Dots span:nth-child(1) {
+    left: 0;
+    animation-delay: 0.1s;
+}
+
+.Loading-Dots span:nth-child(2) {
+    left: 0.5em;
+    animation-delay: 0.2s;
+}
+
+.Loading-Dots span:nth-child(3) {
+    left: 1em;
+    animation-delay: 0.3s;
+}
+
+@keyframes sineWave {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    25% {
+        transform: translateY(-0.5em);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+    75% {
+        transform: translateY(0.5em);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 0;
+    }
 } 

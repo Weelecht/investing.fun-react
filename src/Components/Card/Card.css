@@ -17,6 +17,7 @@
     color: #2c3e50;
     font-size: 1rem;
     font-weight: 600;
+    margin-top: 4px;
     margin-bottom: 8px;
     text-align: center;
     white-space: nowrap;
@@ -24,11 +25,23 @@
     text-overflow: ellipsis;
 }
 
-.Sharpe-Days-Price-Amount {
+.Stats-Container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.Stat-Line {
     color: #34495e;
     font-size: 0.8rem;
     line-height: 1.4;
-    margin-bottom: 8px;
+    text-align: left;
+}
+
+.Positive-Value {
+    color: #27ae60;
+    font-weight: 500;
 }
 
 .input-container {
@@ -40,10 +53,17 @@
 input[type="number"] {
     flex: 1;
     padding: 4px 6px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #4a4a4a;
     border-radius: 4px;
     font-size: 0.8rem;
     width: 60px;
+    background-color: #3a3a3a;
+    color: #e0e0e0;
+}
+
+input[type="number"]::placeholder {
+    color: #e0e0e0;
+    opacity: 0.7;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -58,7 +78,7 @@ input[type="number"] {
 
 button[type="submit"] {
     padding: 4px 8px;
-    background-color: #3498db;
+    background-color: #4da6ff;
     color: white;
     border: none;
     border-radius: 4px;
@@ -66,8 +86,22 @@ button[type="submit"] {
     transition: background-color 0.2s ease;
     white-space: nowrap;
     font-size: 0.8rem;
+    position: relative;
+    overflow: hidden;
+}
+
+button[type="submit"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.1;
+    pointer-events: none;
 }
 
 button[type="submit"]:hover {
-    background-color: #2980b9;
+    background-color: #3d96ef;
 }

@@ -103,7 +103,7 @@ export default function CoinFeed({onDragStart}:CoinFeedProps) {
         const coins = await fetchCoinList();
         if (!coins) return;
         
-        const section = coins.slice(0,3);  
+        const section = coins.slice(0,30);  
         try{
           const mapping = await Promise.all(
             section.map(async(coin)=> {

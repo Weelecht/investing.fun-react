@@ -16,6 +16,7 @@ type Props = {
 };
 
 const getSharpeColor = (value: number): string => {
+    if (isNaN(value)) return '#e0e0e0'; // White for NaN
     if (value < 0) return '#ff0000'; // Red for negative values
     if (value < 1) {
         // Gradient from red to yellow to green for values between 0 and 1
@@ -36,16 +37,25 @@ const formatCurrency = (value: number): string => {
     }).format(value);
 };
 
+const LoadingDots = () => (
+    <span className="Loading-Dots">
+        <span>.</span>
+        <span>.</span>
+        <span>.</span>
+    </span>
+);
+
 export default function StatusBar({ portfolio, totalValue }: Props) {
     const averageSharpe = portfolio.reduce((sum, coin) => sum + coin.sharpe, 0) / portfolio.length;
     const sharpeColor = getSharpeColor(averageSharpe);
+    const isNaNSharpe = isNaN(averageSharpe);
 
     return (
         <div className='Status-Container'>
             <h3>
-                Portfolio Sharpe: 
+                Portfolio Sharpe:&nbsp;
                 <span style={{ color: sharpeColor, fontWeight: 'bold' }}>
-                    {` ${averageSharpe.toFixed(2)}`}
+                    {isNaNSharpe ? <LoadingDots /> : ` ${averageSharpe.toFixed(2)}`}
                 </span>
             </h3>
             <h3>{`Portfolio Value: ${formatCurrency(totalValue)}`}</h3>

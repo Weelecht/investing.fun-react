@@ -67,10 +67,14 @@ export default function Card({ cardInfo, onDragStart, onAmountUpdate }: Props) {
       className="Card-Container">
 
       <h4 className='Title'>{cardInfo.name}</h4>
-      <p className='Sharpe-Days-Price-Amount'>{`Sharpe: ${cardInfo.sharpe} \n 
-        Amount: ${savedAmount} \n 
-        Price: ${formatCurrency(cardInfo.lastPrice)} \n 
-        Position: ${formatCurrency(position)}`}</p>
+      <div className='Stats-Container'>
+        <span className='Stat-Line'>Sharpe: {cardInfo.sharpe}</span>
+        <span className='Stat-Line'>Amount: {savedAmount}</span>
+        <span className='Stat-Line'>Price: {formatCurrency(cardInfo.lastPrice)}</span>
+        <span className='Stat-Line'>
+          Position: <span className={position > 0 ? 'Positive-Value' : ''}>{formatCurrency(position)}</span>
+        </span>
+      </div>
       <form onSubmit={handleSubmission} className="input-container">
         <input 
           type="number" 

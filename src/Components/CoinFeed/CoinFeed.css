@@ -1,12 +1,12 @@
 .CoinFeed-Container {
     display: grid;
     margin: 24px auto;
-    grid-template-columns: repeat(5, 133px);
-    gap: 20px;
+    grid-template-columns: repeat(5, 166px);
+    gap: 30px;
     padding: 24px;
     background: #f8f9fa;
     border-radius: 4px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    max-width: 1200px;
+    max-width: 1800px;
     justify-content: center;
 }
