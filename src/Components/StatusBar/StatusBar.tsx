@@ -46,16 +46,21 @@ const LoadingDots = () => (
 );
 
 export default function StatusBar({ portfolio, totalValue }: Props) {
-    const averageSharpe = portfolio.reduce((sum, coin) => sum + coin.sharpe, 0) / portfolio.length;
-    const sharpeColor = getSharpeColor(averageSharpe);
-    const isNaNSharpe = isNaN(averageSharpe);
+    const weightedSharpe = portfolio.reduce((sum, coin) => {
+        if (!coin.amount || totalValue === 0) return sum;
+        const weight = (coin.amount * coin.lastPrice) / totalValue;
+        return sum + (weight * coin.sharpe);
+    }, 0);
+
+    const sharpeColor = getSharpeColor(weightedSharpe);
+    const isNaNSharpe = isNaN(weightedSharpe) || totalValue === 0;
 
     return (
         <div className='Status-Container'>
             <h3>
                 Portfolio Sharpe:&nbsp;
                 <span style={{ color: sharpeColor, fontWeight: 'bold' }}>
-                    {isNaNSharpe ? <LoadingDots /> : ` ${averageSharpe.toFixed(2)}`}
+                    {isNaNSharpe ? <LoadingDots /> : ` ${weightedSharpe.toFixed(2)}`}
                 </span>
             </h3>
             <h3>{`Portfolio Value: ${formatCurrency(totalValue)}`}</h3>
