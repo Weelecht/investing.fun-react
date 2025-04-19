@@ -1,0 +1,36 @@
+.Portfolio-Wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    gap: 24px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.Status-Container {
+    background: white;
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.Status-Container h3 {
+    color: #2c3e50;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.Portfolio-Container {
+    display: grid;
+    grid-template-columns: repeat(5, 133px);
+    gap: 20px;
+    padding: 16px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    min-height: 200px;
+    justify-content: center;
+}
+  
