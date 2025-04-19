@@ -6,16 +6,17 @@ import "./CoinFeed.css"
 type CardInfo = {
   name: string,
   sharpe: number,
-  days:number
+  days: number;
+  lastPrice: number;
+  amount?: number;
+  position?: number;
 }
 
 type CoinFeedProps = {
   onDragStart: (e: React.DragEvent, card: CardInfo) => void;
 };
 
-
 export default function CoinFeed({onDragStart}:CoinFeedProps) {
-
     const [coins, setCoins] = useState<coin[]>([]); 
   
     type coin = {
@@ -23,6 +24,8 @@ export default function CoinFeed({onDragStart}:CoinFeedProps) {
       sharpe: number,
       days: number
       lastPrice: number
+      amount: number
+      position: number
     }
   
     useEffect(() => {
@@ -43,8 +46,8 @@ export default function CoinFeed({onDragStart}:CoinFeedProps) {
           return res.map((coin) => coin.id);
         }catch(err){
           console.log(err);
+          return [];
         }
-        
       };
   
       const fetchPriceData = async(coin:String, timePeriod:Number) => {
@@ -62,10 +65,9 @@ export default function CoinFeed({onDragStart}:CoinFeedProps) {
           console.log(data);
           return data.prices.map((price:any) => price[1]);
         }catch(err) {
-          console.log(err)
+          console.log(err);
+          return [];
         }
-          
-      
       }
   
       const calculateSharpeRatio = (priceData: number[], riskfreerate: number): number => {
@@ -99,21 +101,28 @@ export default function CoinFeed({onDragStart}:CoinFeedProps) {
 
       const loadCoins = async () => {
         const coins = await fetchCoinList();
+        if (!coins) return;
+        
         const section = coins.slice(0,3);  
         try{
           const mapping = await Promise.all(
             section.map(async(coin)=> {
             const price = await fetchPriceData(coin,365);
-            console.log(price);
+            if (!price) return null;
+            
             const sharpe = calculateSharpeRatio(price,riskfreerate); 
+            const lastPrice = price[price.length-1];
             return {
               name: coin,
               sharpe,
               days: price.length-1,
-              lastPrice: price[price.length-1]
+              lastPrice,
+              amount: 0,
+              position: 0
             }
           }))
-          setCoins(mapping) 
+          const validCoins = mapping.filter((coin): coin is coin => coin !== null);
+          setCoins(validCoins);
         }catch(err) {
           console.log(err)
         }
@@ -127,7 +136,11 @@ export default function CoinFeed({onDragStart}:CoinFeedProps) {
     <div className='CoinFeed-Container'>
         {coins.map(coin => {
             return (
-                <Card key={coin.name} cardInfo={coin} onDragStart={onDragStart}></Card> 
+                <Card 
+                    key={coin.name} 
+                    cardInfo={coin} 
+                    onDragStart={onDragStart}
+                />
             )
         })} 
     </div>

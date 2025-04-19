@@ -8,21 +8,35 @@ type CardInfo = {
   sharpe: number,
   days: number;
   lastPrice: number,
+  amount?: number;
+  position?: number;
 }
 
 type Props = {
   cardInfo: CardInfo;
   onDragStart?: (e: React.DragEvent, card: CardInfo) => void;
+  onAmountUpdate?: (name: string, amount: number) => void;
 };
 
-export default function Card({ cardInfo, onDragStart }: Props) {
+export default function Card({ cardInfo, onDragStart, onAmountUpdate }: Props) {
   const [amount, setAmount] = useState('');
-  const [savedAmount, setSavedAmount] = useState(0);
+  const [savedAmount, setSavedAmount] = useState(cardInfo.amount || 0);
+  const [position, setPosition] = useState(cardInfo.position || 0);
+  
+  useEffect(() => {
+    setSavedAmount(cardInfo.amount || 0);
+    setPosition((cardInfo.amount || 0) * cardInfo.lastPrice);
+  }, [cardInfo.amount, cardInfo.lastPrice]);
   
   const handleSubmission = (e:React.FormEvent) => {
     e.preventDefault();
     if (amount) {
-      setSavedAmount(parseInt(amount));
+      const newAmount = parseInt(amount);
+      setSavedAmount(newAmount);
+      setPosition(newAmount * cardInfo.lastPrice);
+      if (onAmountUpdate) {
+        onAmountUpdate(cardInfo.name, newAmount);
+      }
       setAmount('');
     }
   }
@@ -32,16 +46,22 @@ export default function Card({ cardInfo, onDragStart }: Props) {
     setAmount(value);
   }
 
+  const handleDragStart = (e: React.DragEvent) => {
+    if (onDragStart) {
+      onDragStart(e, { ...cardInfo, amount: savedAmount, position });
+    }
+  }
+
   return (
     <div draggable
-      onDragStart={onDragStart ? (e) => onDragStart(e, cardInfo) : undefined}
+      onDragStart={handleDragStart}
       className="Card-Container">
 
       <h4 className='Title'>{cardInfo.name}</h4>
       <p className='Sharpe-Days-Price-Amount'>{`Sharpe: ${cardInfo.sharpe} \n 
-        Days: ${cardInfo.days} \n 
         Amount: ${savedAmount} \n 
-        Price: ${cardInfo.lastPrice}`}</p>
+        Price: ${cardInfo.lastPrice} \n 
+        Position: $${position.toFixed(2)}`}</p>
       <form onSubmit={handleSubmission} className="input-container">
         <input 
           type="number" 

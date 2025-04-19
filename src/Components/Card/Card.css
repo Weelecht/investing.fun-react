@@ -1,10 +1,11 @@
 .Card-Container {
     background: white;
     border-radius: 4px;
-    padding: 16px;
+    padding: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
+    width: 133px;
 }
 
 .Card-Container:hover {
@@ -14,9 +15,9 @@
 
 .Title {
     color: #2c3e50;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
@@ -25,23 +26,24 @@
 
 .Sharpe-Days-Price-Amount {
     color: #34495e;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    margin-bottom: 12px;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    margin-bottom: 8px;
 }
 
 .input-container {
     display: flex;
-    gap: 8px;
-    margin-top: 8px;
+    gap: 4px;
+    margin-top: 4px;
 }
 
 input[type="number"] {
     flex: 1;
-    padding: 8px;
+    padding: 4px 6px;
     border: 1px solid #e0e0e0;
     border-radius: 4px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    width: 60px;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -55,7 +57,7 @@ input[type="number"] {
 }
 
 button[type="submit"] {
-    padding: 8px 16px;
+    padding: 4px 8px;
     background-color: #3498db;
     color: white;
     border: none;
@@ -63,6 +65,7 @@ button[type="submit"] {
     cursor: pointer;
     transition: background-color 0.2s ease;
     white-space: nowrap;
+    font-size: 0.8rem;
 }
 
 button[type="submit"]:hover {
